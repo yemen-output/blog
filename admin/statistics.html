@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إحصائيات الموقع - OUT PUT للعلوم التقنية </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="../main.css">
+  <style>
+    .statistics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .statistic-item {
+      background-color: var(--white);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      width: calc(33.333% - 20px);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .statistic-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .statistic-item h3 {
+      color: var(--primary-color);
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>إحصائيات الموقع</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../index.html">العودة للرئيسية</a></li>
+        <li><a href="login.html">تسجيل الخروج</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="statistics">
+    <h2>إحصائيات الموقع</h2>
+    <div class="statistics">
+      <div class="statistic-item">
+        <h3>عدد الزوار</h3>
+        <p>1,234</p>
+      </div>
+      <div class="statistic-item">
+        <h3>عدد التسجيلات</h3>
+        <p>567</p>
+      </div>
+      <div class="statistic-item">
+        <h3>عدد المتطوعين</h3>
+        <p>89</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+  </footer>
+
+  <button class="theme-switcher" onclick="toggleTheme()">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <script src="../script.js"></script>
+</body>
+</html>

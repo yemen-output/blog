@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة المحتوى - OUT PUT للعلوم التقنية </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="../main.css">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    button {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: var(--secondary-color);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>إدارة المحتوى</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../index.html">العودة للرئيسية</a></li>
+        <li><a href="login.html">تسجيل الخروج</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="manage-content">
+    <h2>إدارة المحتوى</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>العنوان</th>
+          <th>النوع</th>
+          <th>التاريخ</th>
+          <th>الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>خبر 1</td>
+          <td>خبر</td>
+          <td>2023-10-01</td>
+          <td>
+            <button onclick="editContent()">تعديل</button>
+            <button onclick="deleteContent()">حذف</button>
+          </td>
+        </tr>
+        <tr>
+          <td>منشور 1</td>
+          <td>منشور</td>
+          <td>2023-10-02</td>
+          <td>
+            <button onclick="editContent()">تعديل</button>
+            <button onclick="deleteContent()">حذف</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+  </footer>
+
+  <button class="theme-switcher" onclick="toggleTheme()">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <script src="../script.js"></script>
+  <script>
+    // وظائف إدارة المحتوى
+    function editContent() {
+      alert('سيتم فتح صفحة تعديل المحتوى.');
+    }
+
+    function deleteContent() {
+      if (confirm('هل أنت متأكد من حذف هذا المحتوى؟')) {
+        alert('تم حذف المحتوى بنجاح.');
+      }
+    }
+  </script>
+</body>
+</html>
