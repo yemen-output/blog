@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>طلب خدمة - OUT PUT للعلوم التقنية </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="./main.css">
+  <style>
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    input, textarea, select {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>OUT PUT للعلوم التقنية</h1>
+      <p>نبرمج لنبني المستقبل</p>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="services.html">خدماتنا</a></li>
+        <li><a href="team.html">فريقنا</a></li>
+        <li><a href="contact.html">تواصل معنا</a></li>
+        <li><a href="request-service.html">طلب خدمة</a></li>
+        <li><a href="admin/login.html">تسجيل الدخول</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="request-service">
+    <h2>طلب خدمة</h2>
+    <form id="service-form">
+      <input type="text" placeholder="اسمك" required>
+      <input type="tel" placeholder="رقم الهاتف" required>
+      <select required>
+        <option value="">اختر الخدمة</option>
+        <option value="web-design">تصميم المواقع</option>
+        <option value="mobile-apps">تطبيقات الجوال</option>
+        <option value="marketing">التسويق الإلكتروني</option>
+      </select>
+      <textarea placeholder="تفاصيل الطلب" required></textarea>
+      <button type="submit">إرسال الطلب</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+  </footer>
+  
+  <button class="theme-switcher" onclick="toggleTheme()">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <script src="./script.js"></script>
+  <script>
+    // إدارة نموذج طلب الخدمة
+    const serviceForm = document.getElementById('service-form');
+    if (serviceForm) {
+      serviceForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        alert('تم إرسال طلبك بنجاح!');
+        serviceForm.reset();
+      });
+    }
+  </script>
+</body>
+</html>

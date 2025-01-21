@@ -1,0 +1,111 @@
+/* التصميم العام */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #0056b3;
+  --background-color: #f4f4f4;
+  --text-color: #333;
+  --white: #fff;
+  --black: #000;
+  --dark-mode-bg: #1a1a1a;
+  --dark-mode-text: #f4f4f4;
+}
+body {
+  font-family: 'Tajawal', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+body.dark-mode {
+  background-color: var(--dark-mode-bg);
+  color: var(--dark-mode-text);
+}
+header {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+header .logo h1 {
+  margin: 0;
+  font-size: 2.5em;
+  animation: fadeInDown 1s;
+}
+header .logo p {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  animation: fadeInUp 1s;
+  background: linear-gradient(45deg, #ff4500, #ffcc00, #33cc33);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeIn 1.5s;
+  overflow-x: scroll;
+}
+nav ul li {
+  margin: 0 15px;
+  text-wrap: nowrap;
+}
+nav ul li a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: color 0.3s;
+}
+nav ul li a:hover {
+  color: #ffdd57;
+}
+section {
+  padding: 40px 20px;
+  margin: 20px;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 1s;
+}
+h2 {
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+footer {
+  background-color: var(--primary-color);
+  color: var(--white);
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+.theme-switcher,.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5em;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+:is(.theme-switcher, .scroll-to-top):hover {
+  background-color: var(--secondary-color);
+}
+.scroll-to-top {
+  left: auto;
+  right: 20px;
+}

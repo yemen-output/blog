@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فريقنا - OUT PUT للعلوم التقنية </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="./main.css">
+  <style>
+    .team-members {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .member {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      width: calc(33.333% - 20px);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .member:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .member img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+    .member h3 {
+      color: #007bff;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    /* تصميم متجاوب */
+    @media (max-width: 768px) {
+      .member {
+        width: calc(50% - 20px);
+      }
+    }
+    @media (max-width: 480px) {
+      .member {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>OUT PUT للعلوم التقنية</h1>
+      <p>نبرمج لنبني المستقبل</p>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="services.html">خدماتنا</a></li>
+        <li><a href="team.html">فريقنا</a></li>
+        <li><a href="contact.html">تواصل معنا</a></li>
+        <li><a href="request-service.html">طلب خدمة</a></li>
+        <li><a href="admin/login.html">تسجيل الدخول</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="team">
+    <h2>فريقنا</h2>
+    <div class="team-members">
+      <div class="member">
+        <img src="images/member1.jpg" alt="عضو الفريق 1">
+        <h3>محمد أحمد</h3>
+        <p>مطور ويب</p>
+      </div>
+      <div class="member">
+        <img src="images/member2.jpg" alt="عضو الفريق 2">
+        <h3>فاطمة خالد</h3>
+        <p>مصممة واجهات</p>
+      </div>
+      <div class="member">
+        <img src="images/member3.jpg" alt="عضو الفريق 3">
+        <h3>علي سعيد</h3>
+        <p>خبير تسويق</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+  </footer>
+  
+  <button class="theme-switcher" onclick="toggleTheme()">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OUT PUT للعلوم التقنية</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="./main.css">
+  <style>
+    .news-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .news-item {
+      background-color: var(--white);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      width: calc(33.333% - 20px);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .news-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .news-item img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .news-item .rating {
+      color: #ffc107;
+      margin-top: 10px;
+    }
+    .fa-star-half-alt {
+      transform: rotateY(180deg);
+    }
+    .news-item .comments {
+      margin-top: 10px;
+    }
+    .news-item .comments textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .news-item .comments button {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .news-item .comments button:hover {
+      background-color: var(--secondary-color);
+    }
+    /* تصميم متجاوب */
+@media (max-width: 768px) {
+      .news-item {
+        width: calc(50% - 20px);
+      }
+    }
+@media (max-width: 480px) {
+      .news-item {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>OUT PUT للعلوم التقنية</h1>
+      <p>
+        نبرمج لنبني المستقبل
+      </p>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="services.html">خدماتنا</a></li>
+        <li><a href="team.html">فريقنا</a></li>
+        <li><a href="contact.html">تواصل معنا</a></li>
+        <li><a href="request-service.html">طلب خدمة</a></li>
+        <li><a href="admin/login.html">تسجيل الدخول</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home">
+    <h2>الأخبار</h2>
+    <div class="news-container">
+      <!-- سيتم إضافة الأخبار هنا باستخدام JavaScript -->
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
+  </footer>
+
+  <button class="theme-switcher" onclick="toggleTheme()">
+    <i class="fas fa-moon"></i>
+  </button>
+  
+  <script src="./script.js"></script>
+  <script>
+    // بيانات الأخبار
+    const newsData = [{
+      title: "خبر 1",
+      content: "هذا هو محتوى الخبر الأول.",
+      image: "images/news1.jpg",
+      rating: 4.5,
+      comments: []
+    },
+      {
+        title: "خبر 2",
+        content: "هذا هو محتوى الخبر الثاني.",
+        image: "images/news2.jpg",
+        rating: 3.8,
+        comments: []
+      },
+      {
+        title: "خبر 3",
+        content: "هذا هو محتوى الخبر الثالث.",
+        image: "images/news3.jpg",
+        rating: 5.0,
+        comments: []
+      }];
+
+    // عرض الأخبار
+    const newsContainer = document.querySelector('.news-container');
+
+    newsData.forEach(news => {
+      const newsItem = document.createElement('div');
+      newsItem.classList.add('news-item');
+
+      newsItem.innerHTML = `
+      <h3>${news.title}</h3>
+      <p>${news.content}</p>
+      <img src="${news.image}" alt="${news.title}">
+      <div class="rating">
+      ${generateRatingStars(news.rating)}
+      </div>
+      <div class="comments">
+      <textarea placeholder="أضف تعليقك"></textarea>
+      <button onclick="addComment(this)">إرسال</button>
+      </div>
+      `;
+
+      newsContainer.appendChild(newsItem);
+    });
+
+    // توليد نجوم التقييم
+    function generateRatingStars(rating) {
+      let stars = '';
+      for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+          stars += '<i class="fas fa-star"></i>';
+        } else if (i - 0.5 <= rating) {
+          stars += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+          stars += '<i class="far fa-star"></i>';
+        }
+      }
+      return stars;
+    }
+
+    // إضافة تعليق
+    function addComment(button) {
+      const commentText = button.previousElementSibling.value;
+      if (commentText.trim() !== '') {
+        alert('تم إضافة تعليقك: ' + commentText);
+        button.previousElementSibling.value = '';
+
+        // send the comment to the developer
+      }
+    }
+  </script>
+</body>
+</html>
