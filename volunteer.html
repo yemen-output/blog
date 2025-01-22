@@ -38,7 +38,9 @@
   <header>
     <div class="logo">
       <h1>OUT PUT للعلوم التقنية</h1>
-      <p>نبرمج لنبني المستقبل</p>
+      <p>
+        نبرمج لنبني المستقبل
+      </p>
     </div>
     <nav>
       <ul>
@@ -57,22 +59,24 @@
   <section id="volunteer">
     <h2>تطوع معنا</h2>
     <form id="volunteer-form">
-      <input type="text" placeholder="الاسم الكامل" required>
-      <input type="email" placeholder="البريد الإلكتروني" required>
-      <input type="tel" placeholder="رقم الهاتف" required>
-      <select required>
-        <option value="">اختر مجال التطوع</option>
-        <option value="web-development">تطوير الويب</option>
-        <option value="graphic-design">التصميم الجرافيكي</option>
-        <option value="content-writing">كتابة المحتوى</option>
-      </select>
-      <textarea placeholder="لماذا تريد التطوع معنا؟"></textarea>
+      <input class="section-content" type="text" placeholder="الاسم الكامل" required>
+      <input class="section-content" type="text" placeholder="المحافظة" required>
+      <input class="section-content" type="text" placeholder="التخصص" required>
+      <input class="section-content" type="text" placeholder="السنة الدراسية" required>
+      <p style="color:#CE9D06">⚠️ إذا كنت متخرج ، اكتب في خانة السنة الدراسية متخرج مع سنة التخرج</p>
+      <input class="section-content" type="text" placeholder="مجال التطوع" required>
+      <textarea class="section-content" type="text" placeholder="ماذا يمكن ان تقدم للفريق"></textarea>
+      <textarea class="section-content" type="text" placeholder="ماذا تريد من الفريق ان يقدمه لك"></textarea>
+      <input class="section-content" type="tel" placeholder="رقم الهاتف" required>
+      <input class="section-content" type="text" placeholder="هل تستطيع تقديم دورات تدريبية في المنصة؟" required>
       <button type="submit">تقديم الطلب</button>
     </form>
   </section>
 
   <footer>
-    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
   </footer>
 
   <button class="theme-switcher" onclick="toggleTheme()">
@@ -88,7 +92,25 @@
         e.preventDefault();
         alert('تم تقديم طلب التطوع بنجاح!');
         volunteerForm.reset();
+
+        // send the volunteer request to the developer <php>
       });
+    }
+
+
+
+    const form = {
+      "full_name": "Malak Salah Ali Al-Shami",
+      "current_location": "Amanat Al-Asimah",
+      "major": "Mechatronics Engineering",
+      "graduation_year": "Graduate 2022-2023",
+      "skills_offer_to_team": [
+        "Excellent background in C and C++ languages",
+        "Intermediate in Python language",
+        "Proficient in designing and implementing embedded systems and control systems like Arduino and PLC"
+      ],
+      "expectations_from_team": "Benefit from the team's experiences in various programming languages",
+      "can_offer_training": "Yes, in the areas I am proficient in"
     }
   </script>
 </body>
