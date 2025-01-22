@@ -38,7 +38,9 @@
   <header>
     <div class="logo">
       <h1>OUT PUT للعلوم التقنية</h1>
-      <p>نبرمج لنبني المستقبل</p>
+      <p>
+        نبرمج لنبني المستقبل
+      </p>
     </div>
     <nav>
       <ul>
@@ -57,11 +59,16 @@
     <form id="service-form">
       <input class="section-content" type="text" placeholder="اسمك" required>
       <input class="section-content" type="tel" placeholder="رقم الهاتف" required>
-      <select class="section-content" required>
+      <select id="services" class="section-content" required>
         <option value="">اختر الخدمة</option>
-        <option value="web-design">تصميم المواقع</option>
-        <option value="mobile-apps">تطبيقات الجوال</option>
-        <option value="marketing">التسويق الإلكتروني</option>
+
+
+        <!-- fetch services <php> -->
+
+
+        <option value="web-design" data-id="0">تصميم المواقع</option>
+        <option value="mobile-apps" data-id="1">تطبيقات الجوال</option>
+        <option value="marketing" data-id="2">التسويق الإلكتروني</option>
       </select>
       <textarea class="section-content" placeholder="تفاصيل الطلب" required></textarea>
       <button type="submit">إرسال الطلب</button>
@@ -69,9 +76,11 @@
   </section>
 
   <footer>
-    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
   </footer>
-  
+
   <button class="theme-switcher" onclick="toggleTheme()">
     <i class="fas fa-moon"></i>
   </button>
@@ -85,9 +94,19 @@
         e.preventDefault();
         alert('تم إرسال طلبك بنجاح!');
         serviceForm.reset();
-        
+
         // send the service request to the developer <php>
       });
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceId = urlParams.get('service_id');
+    if (serviceId) {
+      const services = document.querySelectorAll("#services option");
+      Object.values(services).forEach((service)=>{
+        service.removeAttribute("selected");
+      })
+      Object.values(services).filter((service)=>service.dataset.id == serviceId).setAttribute("selected", "true");
     }
   </script>
 </body>
