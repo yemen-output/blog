@@ -8,6 +8,7 @@
   --black: #000;
   --dark-mode-bg: #1a1a1a;
   --dark-mode-text: #f4f4f4;
+  --dark-mode-box: #232323;
 }
 body {
   font-family: 'Tajawal', sans-serif;
@@ -71,6 +72,21 @@ section {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   animation: fadeInUp 1s;
+}
+body.dark-mode section {
+  background-color: var(--black);
+}
+.section-content {
+  border: 1px solid #ddd;
+  background-color: var(--white);
+}
+body.dark-mode .section-content {
+  background-color: var(--dark-mode-box);
+  border: 1px solid #666;
+  color: var(--dark-mode-text);
+}
+select {
+  color: #777;
 }
 h2 {
   color: var(--primary-color);
