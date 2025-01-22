@@ -32,13 +32,41 @@
       font-size: 1.5em;
       margin-bottom: 10px;
     }
+    .service-item .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+    .service-item .buttons button {
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .service-item .buttons button.more-details {
+      background-color: transparent;
+      border: 2px solid var(--primary-color);
+    }
+    body.dark-mode .service-item .buttons button.more-details {
+      color: var(--white);
+    }
+    .service-item .buttons button.request-service {
+      border: none;
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+    .service-item .buttons button.more-details:hover {
+      border-color: var(--secondary-color);
+    }
+    .service-item .buttons button.request-service:hover {
+      background-color: var(--secondary-color);
+    }
     /* تصميم متجاوب */
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
       .service-item {
         width: calc(50% - 20px);
       }
     }
-    @media (max-width: 480px) {
+@media (max-width: 480px) {
       .service-item {
         width: 100%;
       }
@@ -49,7 +77,9 @@
   <header>
     <div class="logo">
       <h1>OUT PUT للعلوم التقنية</h1>
-      <p>نبرمج لنبني المستقبل</p>
+      <p>
+        نبرمج لنبني المستقبل
+      </p>
     </div>
     <nav>
       <ul>
@@ -66,25 +96,45 @@
   <section id="services">
     <h2>خدماتنا</h2>
     <div class="service-list">
-      <div class="service-item">
+      <div class="service-item section-content">
         <h3>تصميم المواقع</h3>
-        <p>نقدم خدمات تصميم مواقع احترافية بتقنيات حديثة.</p>
+        <p>
+          نقدم خدمات تصميم مواقع احترافية بتقنيات حديثة.
+        </p>
+        <div class="buttons">
+          <button class="more-details">تفاصيل أكثر</button>
+          <button class="request-service">طلب الخدمة</button>
+        </div>
       </div>
-      <div class="service-item">
+      <div class="service-item section-content">
         <h3>تطبيقات الجوال</h3>
-        <p>تصميم وتطوير تطبيقات الجوال لأنظمة iOS و Android.</p>
+        <p>
+          تصميم وتطوير تطبيقات الجوال لأنظمة iOS و Android.
+        </p>
+        <div class="buttons">
+          <button class="more-details">تفاصيل أكثر</button>
+          <button class="request-service">طلب الخدمة</button>
+        </div>
       </div>
-      <div class="service-item">
+      <div class="service-item section-content">
         <h3>التسويق الإلكتروني</h3>
-        <p>حلول تسويقية مبتكرة لزيادة حضورك الرقمي.</p>
+        <p>
+          حلول تسويقية مبتكرة لزيادة حضورك الرقمي.
+        </p>
+        <div class="buttons">
+          <button class="more-details">تفاصيل أكثر</button>
+          <button class="request-service">طلب الخدمة</button>
+        </div>
       </div>
     </div>
   </section>
 
   <footer>
-    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
   </footer>
-  
+
   <button class="theme-switcher" onclick="toggleTheme()">
     <i class="fas fa-moon"></i>
   </button>
