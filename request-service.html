@@ -55,15 +55,15 @@
   <section id="request-service">
     <h2>طلب خدمة</h2>
     <form id="service-form">
-      <input type="text" placeholder="اسمك" required>
-      <input type="tel" placeholder="رقم الهاتف" required>
-      <select required>
+      <input class="section-content" type="text" placeholder="اسمك" required>
+      <input class="section-content" type="tel" placeholder="رقم الهاتف" required>
+      <select class="section-content" required>
         <option value="">اختر الخدمة</option>
         <option value="web-design">تصميم المواقع</option>
         <option value="mobile-apps">تطبيقات الجوال</option>
         <option value="marketing">التسويق الإلكتروني</option>
       </select>
-      <textarea placeholder="تفاصيل الطلب" required></textarea>
+      <textarea class="section-content" placeholder="تفاصيل الطلب" required></textarea>
       <button type="submit">إرسال الطلب</button>
     </form>
   </section>
@@ -85,6 +85,8 @@
         e.preventDefault();
         alert('تم إرسال طلبك بنجاح!');
         serviceForm.reset();
+        
+        // send the service request to the developer <php>
       });
     }
   </script>
