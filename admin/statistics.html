@@ -19,7 +19,10 @@
       border: 1px solid #ddd;
       border-radius: 8px;
       padding: 20px;
-      width: calc(33.333% - 20px);
+      text-wrap: nowrap;
+      text-align: center;
+      flex-grow: 1;
+      flex-basis: 0;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s, box-shadow 0.3s;
     }
@@ -42,7 +45,7 @@
     <nav>
       <ul>
         <li><a href="../index.html">العودة للرئيسية</a></li>
-        <li><a href="login.html">تسجيل الخروج</a></li>
+        <li><a href="logout.html">تسجيل الخروج</a></li>
       </ul>
     </nav>
   </header>
@@ -50,23 +53,41 @@
   <section id="statistics">
     <h2>إحصائيات الموقع</h2>
     <div class="statistics">
-      <div class="statistic-item">
+      <div class="statistic-item section-content">
         <h3>عدد الزوار</h3>
-        <p>1,234</p>
+        <p>
+          1245
+          <!-- fetch <php> -->
+        </p>
       </div>
-      <div class="statistic-item">
-        <h3>عدد التسجيلات</h3>
-        <p>567</p>
+      <div class="statistic-item section-content">
+        <h3>عدد تسجيل الدورات</h3>
+        <p>
+          576
+          <!-- fetch <php> -->
+        </p>
       </div>
-      <div class="statistic-item">
+      <div class="statistic-item section-content">
         <h3>عدد المتطوعين</h3>
-        <p>89</p>
+        <p>
+          55
+          <!-- fetch <php> -->
+        </p>
+      </div>
+      <div class="statistic-item section-content">
+        <h3>عدد طلب الخدمات</h3>
+        <p>
+          193
+          <!-- fetch <php> -->
+        </p>
       </div>
     </div>
   </section>
 
   <footer>
-    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
   </footer>
 
   <button class="theme-switcher" onclick="toggleTheme()">
