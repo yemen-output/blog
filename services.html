@@ -144,7 +144,7 @@
     const requestServiceButtons = document.querySelectorAll("button.request-service");
     requestServiceButtons.forEach((button)=>{
       button.addEventListener("click", ()=>{
-        const id = button.dataset.id;
+        const id = button.parentElement.parentElement.dataset.id;
         window.location.href = `request-service.html?service_id=${id}`;
       });
     })
