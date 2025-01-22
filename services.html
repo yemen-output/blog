@@ -96,7 +96,7 @@
   <section id="services">
     <h2>خدماتنا</h2>
     <div class="service-list">
-      <div class="service-item section-content">
+      <div class="service-item section-content" data-id="0">
         <h3>تصميم المواقع</h3>
         <p>
           نقدم خدمات تصميم مواقع احترافية بتقنيات حديثة.
@@ -106,7 +106,7 @@
           <button class="request-service">طلب الخدمة</button>
         </div>
       </div>
-      <div class="service-item section-content">
+      <div class="service-item section-content" data-id="1">
         <h3>تطبيقات الجوال</h3>
         <p>
           تصميم وتطوير تطبيقات الجوال لأنظمة iOS و Android.
@@ -116,7 +116,7 @@
           <button class="request-service">طلب الخدمة</button>
         </div>
       </div>
-      <div class="service-item section-content">
+      <div class="service-item section-content" data-id="2">
         <h3>التسويق الإلكتروني</h3>
         <p>
           حلول تسويقية مبتكرة لزيادة حضورك الرقمي.
@@ -140,5 +140,14 @@
   </button>
 
   <script src="./script.js"></script>
+  <script>
+    const requestServiceButtons = document.querySelectorAll("button.request-service");
+    requestServiceButtons.forEach((button)=>{
+      button.addEventListener("click", ()=>{
+        const id = button.dataset.id;
+        window.location.href = `request-service.html?service_id=${id}`;
+      });
+    })
+  </script>
 </body>
 </html>
