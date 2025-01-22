@@ -84,7 +84,7 @@
     <nav>
       <ul>
         <li><a href="../index.html">العودة للرئيسية</a></li>
-        <li><a href="login.html">تسجيل الخروج</a></li>
+        <li><a href="logout.html">تسجيل الخروج</a></li>
       </ul>
     </nav>
   </header>
@@ -97,20 +97,15 @@
       <button onclick="openTab('performance')">الأداء</button>
       <button onclick="openTab('design')">التصميم</button>
       <button onclick="openTab('social')">التواصل</button>
-      <button onclick="openTab('backup')">النسخ الاحتياطي</button>
       <button onclick="openTab('language')">اللغة</button>
       <button onclick="openTab('notifications')">الإشعارات</button>
-      <button onclick="openTab('analytics')">التحليلات</button>
-      <button onclick="openTab('api')">التكامل مع API</button>
       <button onclick="openTab('roles')">الصلاحيات</button>
       <button onclick="openTab('privacy')">الخصوصية</button>
       <button onclick="openTab('accessibility')">إمكانية الوصول</button>
       <button onclick="openTab('updates')">التحديثات</button>
       <button onclick="openTab('logs')">السجلات</button>
       <button onclick="openTab('integrations')">التكاملات</button>
-      <button onclick="openTab('custom-code')">الكود المخصص</button>
       <button onclick="openTab('advanced')">الإعدادات المتقدمة</button>
-      <button onclick="openTab('videos')">إدارة الفيديوهات</button>
       <button onclick="openTab('content')">إدارة المحتوى</button>
     </div>
 
@@ -118,11 +113,11 @@
     <div id="seo" class="settings-content active">
       <form id="seo-form">
         <label for="site-title">عنوان الموقع:</label>
-        <input type="text" id="site-title" placeholder="عنوان الموقع" required>
+        <input class="section-content" type="text" id="site-title" placeholder="عنوان الموقع" required>
         <label for="site-description">وصف الموقع:</label>
-        <textarea id="site-description" placeholder="وصف الموقع" required></textarea>
+        <textarea class="section-content" id="site-description" placeholder="وصف الموقع" required></textarea>
         <label for="site-keywords">الكلمات المفتاحية:</label>
-        <input type="text" id="site-keywords" placeholder="الكلمات المفتاحية" required>
+        <input class="section-content" type="text" id="site-keywords" placeholder="الكلمات المفتاحية" required>
         <button type="submit">حفظ التغييرات</button>
       </form>
     </div>
@@ -131,12 +126,12 @@
     <div id="security" class="settings-content">
       <form id="security-form">
         <label for="enable-https">تمكين HTTPS:</label>
-        <select id="enable-https">
+        <select class="section-content" id="enable-https">
           <option value="yes">نعم</option>
           <option value="no">لا</option>
         </select>
         <label for="firewall">جدار الحماية:</label>
-        <select id="firewall">
+        <select class="section-content" id="firewall">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
         </select>
@@ -148,12 +143,12 @@
     <div id="performance" class="settings-content">
       <form id="performance-form">
         <label for="enable-caching">تمكين التخزين المؤقت:</label>
-        <select id="enable-caching">
+        <select class="section-content" id="enable-caching">
           <option value="yes">نعم</option>
           <option value="no">لا</option>
         </select>
         <label for="image-compression">ضغط الصور:</label>
-        <select id="image-compression">
+        <select class="section-content" id="image-compression">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
         </select>
@@ -165,14 +160,14 @@
     <div id="design" class="settings-content">
       <form id="design-form">
         <label for="theme">السمة:</label>
-        <select id="theme">
+        <select class="section-content" id="theme">
           <option value="light">فاتح</option>
           <option value="dark">غامق</option>
         </select>
         <label for="primary-color">اللون الأساسي:</label>
         <input type="color" id="primary-color" value="#007bff">
         <label for="font-family">نوع الخط:</label>
-        <select id="font-family">
+        <select class="section-content" id="font-family">
           <option value="Tajawal">Tajawal</option>
           <option value="Arial">Arial</option>
           <option value="Times New Roman">Times New Roman</option>
@@ -185,26 +180,12 @@
     <div id="social" class="settings-content">
       <form id="social-form">
         <label for="whatsapp">واتساب:</label>
-        <input type="url" id="whatsapp" placeholder="رابط واتساب">
+        <input class="section-content" type="url" id="whatsapp" placeholder="رابط واتساب">
         <label for="facebook">فيسبوك:</label>
-        <input type="url" id="facebook" placeholder="رابط فيسبوك">
+        <input class="section-content" type="url" id="facebook" placeholder="رابط فيسبوك">
         <label for="instagram">إنستغرام:</label>
-        <input type="url" id="instagram" placeholder="رابط إنستغرام">
+        <input class="section-content" type="url" id="instagram" placeholder="رابط إنستغرام">
         <button type="submit">حفظ التغييرات</button>
-      </form>
-    </div>
-
-    <!-- إعدادات النسخ الاحتياطي -->
-    <div id="backup" class="settings-content">
-      <form id="backup-form">
-        <label for="backup-frequency">تكرار النسخ الاحتياطي:</label>
-        <select id="backup-frequency">
-          <option value="daily">يومي</option>
-          <option value="weekly">أسبوعي</option>
-          <option value="monthly">شهري</option>
-        </select>
-        <button type="submit">إنشاء نسخة احتياطية</button>
-        <button type="button" onclick="restoreBackup()">استعادة نسخة احتياطية</button>
       </form>
     </div>
 
@@ -212,13 +193,13 @@
     <div id="language" class="settings-content">
       <form id="language-form">
         <label for="default-language">اللغة الافتراضية:</label>
-        <select id="default-language">
+        <select class="section-content" id="default-language">
           <option value="ar">العربية</option>
           <option value="en">الإنجليزية</option>
           <option value="fr">الفرنسية</option>
         </select>
         <label for="enable-translation">تمكين الترجمة:</label>
-        <select id="enable-translation">
+        <select class="section-content" id="enable-translation">
           <option value="yes">نعم</option>
           <option value="no">لا</option>
         </select>
@@ -229,43 +210,10 @@
     <!-- إعدادات الإشعارات -->
     <div id="notifications" class="settings-content">
       <form id="notifications-form">
-        <label for="email-notifications">الإشعارات عبر البريد الإلكتروني:</label>
-        <select id="email-notifications">
-          <option value="enabled">مفعل</option>
-          <option value="disabled">معطل</option>
-        </select>
         <label for="push-notifications">الإشعارات الفورية:</label>
-        <select id="push-notifications">
+        <select class="section-content" id="push-notifications">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
-        </select>
-        <button type="submit">حفظ التغييرات</button>
-      </form>
-    </div>
-
-    <!-- إعدادات التحليلات -->
-    <div id="analytics" class="settings-content">
-      <form id="analytics-form">
-        <label for="google-analytics">كود Google Analytics:</label>
-        <textarea id="google-analytics" placeholder="أدخل كود التتبع"></textarea>
-        <label for="enable-analytics">تمكين التحليلات:</label>
-        <select id="enable-analytics">
-          <option value="yes">نعم</option>
-          <option value="no">لا</option>
-        </select>
-        <button type="submit">حفظ التغييرات</button>
-      </form>
-    </div>
-
-    <!-- إعدادات التكامل مع API -->
-    <div id="api" class="settings-content">
-      <form id="api-form">
-        <label for="api-key">مفتاح API:</label>
-        <input type="text" id="api-key" placeholder="أدخل مفتاح API">
-        <label for="enable-api">تمكين التكامل مع API:</label>
-        <select id="enable-api">
-          <option value="yes">نعم</option>
-          <option value="no">لا</option>
         </select>
         <button type="submit">حفظ التغييرات</button>
       </form>
@@ -275,13 +223,13 @@
     <div id="roles" class="settings-content">
       <form id="roles-form">
         <label for="user-roles">أدوار المستخدمين:</label>
-        <select id="user-roles">
+        <select class="section-content" id="user-roles">
           <option value="admin">مشرف</option>
           <option value="editor">محرر</option>
           <option value="user">مستخدم</option>
         </select>
         <label for="role-permissions">صلاحيات الأدوار:</label>
-        <textarea id="role-permissions" placeholder="أدخل الصلاحيات"></textarea>
+        <textarea class="section-content" id="role-permissions" placeholder="أدخل الصلاحيات"></textarea>
         <button type="submit">حفظ التغييرات</button>
       </form>
     </div>
@@ -290,12 +238,10 @@
     <div id="privacy" class="settings-content">
       <form id="privacy-form">
         <label for="enable-cookies">تمكين ملفات تعريف الارتباط:</label>
-        <select id="enable-cookies">
+        <select class="section-content" id="enable-cookies">
           <option value="yes">نعم</option>
           <option value="no">لا</option>
         </select>
-        <label for="privacy-policy">رابط سياسة الخصوصية:</label>
-        <input type="url" id="privacy-policy" placeholder="أدخل رابط سياسة الخصوصية">
         <button type="submit">حفظ التغييرات</button>
       </form>
     </div>
@@ -304,12 +250,12 @@
     <div id="accessibility" class="settings-content">
       <form id="accessibility-form">
         <label for="enable-high-contrast">تمكين الوضع عالي التباين:</label>
-        <select id="enable-high-contrast">
+        <select class="section-content" id="enable-high-contrast">
           <option value="yes">نعم</option>
           <option value="no">لا</option>
         </select>
         <label for="font-size">حجم الخط:</label>
-        <select id="font-size">
+        <select class="section-content" id="font-size">
           <option value="small">صغير</option>
           <option value="medium">متوسط</option>
           <option value="large">كبير</option>
@@ -322,12 +268,12 @@
     <div id="updates" class="settings-content">
       <form id="updates-form">
         <label for="auto-updates">التحديث التلقائي:</label>
-        <select id="auto-updates">
+        <select class="section-content" id="auto-updates">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
         </select>
         <label for="update-frequency">تكرار التحديث:</label>
-        <select id="update-frequency">
+        <select class="section-content" id="update-frequency">
           <option value="daily">يومي</option>
           <option value="weekly">أسبوعي</option>
           <option value="monthly">شهري</option>
@@ -340,13 +286,13 @@
     <div id="logs" class="settings-content">
       <form id="logs-form">
         <label for="log-level">مستوى السجلات:</label>
-        <select id="log-level">
+        <select class="section-content" id="log-level">
           <option value="info">معلومات</option>
           <option value="warning">تحذير</option>
           <option value="error">خطأ</option>
         </select>
         <label for="log-retention">فترة الاحتفاظ بالسجلات:</label>
-        <select id="log-retention">
+        <select class="section-content" id="log-retention">
           <option value="7">أسبوع واحد</option>
           <option value="30">شهر واحد</option>
           <option value="90">ثلاثة أشهر</option>
@@ -359,26 +305,15 @@
     <div id="integrations" class="settings-content">
       <form id="integrations-form">
         <label for="google-services">خدمات Google:</label>
-        <select id="google-services">
+        <select class="section-content" id="google-services">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
         </select>
         <label for="social-media-integration">التكامل مع وسائل التواصل الاجتماعي:</label>
-        <select id="social-media-integration">
+        <select class="section-content" id="social-media-integration">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
         </select>
-        <button type="submit">حفظ التغييرات</button>
-      </form>
-    </div>
-
-    <!-- إعدادات الكود المخصص -->
-    <div id="custom-code" class="settings-content">
-      <form id="custom-code-form">
-        <label for="custom-css">CSS مخصص:</label>
-        <textarea id="custom-css" placeholder="أدخل CSS مخصص"></textarea>
-        <label for="custom-js">JavaScript مخصص:</label>
-        <textarea id="custom-js" placeholder="أدخل JavaScript مخصص"></textarea>
         <button type="submit">حفظ التغييرات</button>
       </form>
     </div>
@@ -387,26 +322,15 @@
     <div id="advanced" class="settings-content">
       <form id="advanced-form">
         <label for="debug-mode">وضع التصحيح:</label>
-        <select id="debug-mode">
+        <select class="section-content" id="debug-mode">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
         </select>
         <label for="maintenance-mode">وضع الصيانة:</label>
-        <select id="maintenance-mode">
+        <select class="section-content" id="maintenance-mode">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
         </select>
-        <button type="submit">حفظ التغييرات</button>
-      </form>
-    </div>
-
-    <!-- إدارة الفيديوهات -->
-    <div id="videos" class="settings-content">
-      <form id="videos-form">
-        <label for="youtube-link">رابط فيديو يوتيوب:</label>
-        <input type="url" id="youtube-link" placeholder="أدخل رابط فيديو يوتيوب">
-        <button type="button" onclick="previewVideo()">معاينة الفيديو</button>
-        <div class="video-preview" id="video-preview"></div>
         <button type="submit">حفظ التغييرات</button>
       </form>
     </div>
@@ -415,12 +339,12 @@
     <div id="content" class="settings-content">
       <form id="content-form">
         <label for="content-approval">تفعيل الموافقة على المحتوى:</label>
-        <select id="content-approval">
+        <select class="section-content" id="content-approval">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
         </select>
         <label for="content-archiving">تفعيل أرشفة المحتوى:</label>
-        <select id="content-archiving">
+        <select class="section-content" id="content-archiving">
           <option value="enabled">مفعل</option>
           <option value="disabled">معطل</option>
         </select>
@@ -430,7 +354,9 @@
   </section>
 
   <footer>
-    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
   </footer>
 
   <button class="theme-switcher" onclick="toggleTheme()">
@@ -454,24 +380,92 @@
       document.querySelector(`button[onclick="openTab('${tabName}')"]`).classList.add('active');
     }
 
-    // استعادة النسخ الاحتياطية
-    function restoreBackup() {
-      if (confirm('هل أنت متأكد من استعادة النسخة الاحتياطية؟')) {
-        alert('تم استعادة النسخة الاحتياطية بنجاح.');
-      }
-    }
+    const settingsData = {
+      seo: {
+        siteTitle: "",
+        siteDescription: "",
+        siteKeywords: ""
+      },
+      security: {
+        enableHttps: true,
+        firewall: "enabled"
+      },
+      performance: {
+        enableCaching: true,
+        imageCompression: "enabled",
+      },
+      design: {
+        theme: "light",
+        // light, dark
+        primaryColor: "#007bff",
+        fontFamily: "Tajawal",
+        // Tajawal, Arial, Times New Roman
+      },
+      social: {
+        whatsapp: "",
+        facebook: "",
+        instagram: ""
+      },
+      language: {
+        defaultLanguage: "ar",
+        enableTranslation: true
+      },
+      notifications: {
+        pushNotifications: "enabled"
+      },
+      roles: {
+        userRoles: "admin",
+        // admin, editor, user
+        rolePermissions: "",
+        // صلاحيات الأدوار
+      },
+      privacy: {
+        enableCookies: true
+      },
+      accessibility: {
+        enableHighContrast: true,
+        fontSize: "small",
+        // small, medium, large
+      },
+      updates: {
+        autoUpdates: "enabled",
+        updateFrequency: "weekly"
+        // daily, weekly, monthly
+      },
+      logs: {
+        logLevel: "info",
+        // info, warning, error
+        logRetention: "7"
+        // 7, 30, 90
+      },
+      integrations: {
+        googleServices: "enabled",
+        socialMediaIntegration: "enabled"
+      },
+      advanced: {
+        debugMode: "enabled",
+        maintenanceMode: "enabled"
+      },
+      content: {
+        contentApproval: "enabled",
+        contentArchiving: "enabled"
+      },
+    };
 
-    // معاينة فيديو يوتيوب
-    function previewVideo() {
-      const youtubeLink = document.getElementById('youtube-link').value;
-      const videoId = youtubeLink.split('v=')[1];
-      const videoPreview = document.getElementById('video-preview');
-      if (videoId) {
-        videoPreview.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
-      } else {
-        videoPreview.innerHTML = '<p>الرجاء إدخال رابط يوتيوب صحيح.</p>';
-      }
-    }
+    const forms = document.querySelectorAll("form");
+    forms.forEach((form)=> {
+      const id = form.id.split("-")[0];
+      form.addEventListener("submit", (e)=> {
+        e.preventDefault();
+        
+        if (id === "seo") {
+          const siteTitle = form.getElementById("site-title");
+          const siteDescription = form.getElementById("site-description");
+          const siteKeywords = form.getElementById("site-keywords");
+          
+        }
+      });
+    })
   </script>
 </body>
 </html>
