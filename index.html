@@ -15,8 +15,6 @@
       justify-content: center;
     }
     .news-item {
-      background-color: var(--white);
-      border: 1px solid #ddd;
       border-radius: 8px;
       padding: 20px;
       width: calc(33.333% - 20px);
@@ -47,6 +45,10 @@
       border: 1px solid #ddd;
       border-radius: 8px;
       margin-top: 10px;
+    }
+    body.dark-mode .news-item .comments textarea {
+      background-color: #343434;
+      color: var(--dark-mode-text);
     }
     .news-item .comments button {
       background-color: var(--primary-color);
@@ -141,6 +143,7 @@
     newsData.forEach(news => {
       const newsItem = document.createElement('div');
       newsItem.classList.add('news-item');
+      newsItem.classList.add('section-content');
 
       newsItem.innerHTML = `
       <h3>${news.title}</h3>
@@ -180,7 +183,7 @@
         alert('تم إضافة تعليقك: ' + commentText);
         button.previousElementSibling.value = '';
 
-        // send the comment to the developer
+        // send the comment to the developer <php>
       }
     }
   </script>
