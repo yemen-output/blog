@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="./main.css">
-  
+
   <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
   <script>
     eruda.init();
   </script>
-  
+
   <style>
     form {
       display: flex;
@@ -106,15 +106,12 @@
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    console.log(window.location)
-    console.log(urlParams);
     const serviceId = urlParams.get('service_id');
-    console.log(serviceId);
     if (serviceId) {
       const services = document.querySelectorAll("#services option");
       Object.values(services).forEach((service)=> {
         service.removeAttribute("selected");
-      })
+      });
       Object.values(services).filter((service)=>service.dataset.id == serviceId).setAttribute("selected", "true");
     }
   </script>
