@@ -1,3 +1,8 @@
+
+
+<!-- check the session and if username and password are true stay him here, if they are false redirect him to "login.html" or "../index.html" <php> -->
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -37,7 +42,7 @@
     <nav>
       <ul>
         <li><a href="../index.html">العودة للرئيسية</a></li>
-        <li><a href="login.html">تسجيل الخروج</a></li>
+        <li><a href="logout.html">تسجيل الخروج</a></li>
       </ul>
     </nav>
   </header>
@@ -67,26 +72,32 @@
     // وظائف لوحة التحكم
     function manageUsers() {
       alert('سيتم فتح صفحة إدارة المستخدمين.');
+      window.location.href = "manage-users.html";
     }
 
     function manageCourses() {
       alert('سيتم فتح صفحة إدارة الدورات.');
+      window.location.href = "manage-courses.html";
     }
 
     function manageVolunteers() {
       alert('سيتم فتح صفحة إدارة المتطوعين.');
+      window.location.href = "manage-volunteers.html";
     }
 
     function manageContent() {
       alert('سيتم فتح صفحة إدارة المحتوى.');
+      window.location.href = "manage-content.html";
     }
 
     function viewStatistics() {
       alert('سيتم فتح صفحة الإحصائيات.');
+      window.location.href = "statistics.html";
     }
 
     function siteSettings() {
       alert('سيتم فتح صفحة إعدادات الموقع.');
+      window.location.href = "settings.html";
     }
   </script>
 </body>
