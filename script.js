@@ -1,13 +1,23 @@
+const themeIcon = document.querySelector('.theme-switcher i');
+
+const isDarkMode = JSON.parse(localStorage.getItem("is-dark-mode"));
+if (isDarkMode === true) {
+  document.body.classList.add("dark-mode");
+  themeIcon.classList.remove('fa-moon');
+  themeIcon.classList.add('fa-sun');
+}
+
 // تبديل السمة (فاتح/غامق)
 function toggleTheme() {
   document.body.classList.toggle('dark-mode');
-  const themeIcon = document.querySelector('.theme-switcher i');
   if (document.body.classList.contains('dark-mode')) {
     themeIcon.classList.remove('fa-moon');
     themeIcon.classList.add('fa-sun');
+    localStorage.setItem("is-dark-mode", JSON.stringify(true));
   } else {
     themeIcon.classList.remove('fa-sun');
     themeIcon.classList.add('fa-moon');
+    localStorage.setItem("is-dark-mode", JSON.stringify(false));
   }
 }
 
