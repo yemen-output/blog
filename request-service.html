@@ -112,7 +112,7 @@
       Object.values(services).forEach((service)=> {
         service.removeAttribute("selected");
       });
-      Object.values(services).filter((service)=>service.dataset.id == serviceId).setAttribute("selected", "true");
+      Object.values(services).filter((service)=>service.dataset.id == serviceId)[0].setAttribute("selected", "true");
     }
   </script>
 </body>
