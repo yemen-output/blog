@@ -100,14 +100,21 @@
     }
 
     const urlParams = new URLSearchParams(window.location.search);
+    console.log(window.location)
+    console.log(urlParams);
     const serviceId = urlParams.get('service_id');
+    console.log(serviceId);
     if (serviceId) {
       const services = document.querySelectorAll("#services option");
-      Object.values(services).forEach((service)=>{
+      Object.values(services).forEach((service)=> {
         service.removeAttribute("selected");
       })
       Object.values(services).filter((service)=>service.dataset.id == serviceId).setAttribute("selected", "true");
     }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+  <script>
+    eruda.init();
   </script>
 </body>
 </html>
