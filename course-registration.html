@@ -57,16 +57,16 @@
   <section id="course-registration">
     <h2>تسجيل في دورة</h2>
     <form id="course-form">
-      <input type="text" placeholder="الاسم الكامل" required>
-      <input type="email" placeholder="البريد الإلكتروني" required>
-      <input type="tel" placeholder="رقم الهاتف" required>
-      <select required>
+      <input class="section-content" type="text" placeholder="الاسم الكامل" required>
+      <input class="section-content" type="email" placeholder="البريد الإلكتروني" required>
+      <input class="section-content" type="tel" placeholder="رقم الهاتف" required>
+      <select class="section-content" required>
         <option value="">اختر الدورة</option>
         <option value="web-development">تطوير الويب</option>
         <option value="mobile-development">تطوير تطبيقات الجوال</option>
         <option value="digital-marketing">التسويق الرقمي</option>
       </select>
-      <textarea placeholder="ملاحظات (اختياري)"></textarea>
+      <textarea class="section-content" placeholder="ملاحظات (اختياري)"></textarea>
       <button type="submit">تسجيل</button>
     </form>
   </section>
@@ -88,6 +88,8 @@
         e.preventDefault();
         alert('تم تسجيلك في الدورة بنجاح!');
         courseForm.reset();
+        
+        // send the course registration request to the developer <php>
       });
     }
   </script>
