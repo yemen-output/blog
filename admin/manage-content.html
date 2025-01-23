@@ -46,17 +46,24 @@
     body.dark-mode tr:hover {
       background-color: #131313;
     }
-    button {
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+    }
+    .actions button {
       background-color: var(--primary-color);
       color: var(--white);
       border: none;
       padding: 5px 10px;
-      margin: 5px;
+      margin: 0;
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
+      font-size: 1em;
     }
-    button:hover {
+    .actions button:hover {
       background-color: var(--secondary-color);
     }
   </style>
@@ -77,39 +84,17 @@
   <section id="manage-content">
     <h2>إدارة المحتوى</h2>
     <div id="table-container">
-      
-      
-      <!-- fetch content <php> -->
-      
-      
       <table>
         <thead>
           <tr>
             <th>العنوان</th>
-            <th>النوع</th>
+            <th>الوصف</th>
             <th>التاريخ</th>
             <th>الإجراءات</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>خبر 1</td>
-            <td>خبر</td>
-            <td>2023-10-01</td>
-            <td>
-              <button onclick="editContent()">تعديل</button>
-              <button onclick="deleteContent()">حذف</button>
-            </td>
-          </tr>
-          <tr>
-            <td>منشور 1</td>
-            <td>منشور</td>
-            <td>2023-10-02</td>
-            <td>
-              <button onclick="editContent()">تعديل</button>
-              <button onclick="deleteContent()">حذف</button>
-            </td>
-          </tr>
+        <tbody id="content-table-body">
+          <!-- سيتم جلب البيانات هنا -->
         </tbody>
       </table>
     </div>
@@ -127,19 +112,70 @@
 
   <script src="../script.js"></script>
   <script>
-    // وظائف إدارة المحتوى
-    function editContent() {
-      alert('سيتم فتح صفحة تعديل المحتوى.');
-      
-    }
-
-    function deleteContent() {
-      if (confirm('هل أنت متأكد من حذف هذا المحتوى؟')) {
-        alert('تم حذف المحتوى بنجاح.');
-        
-        // delete content <php>
+    async function fetchContents() {
+      try {
+        const response = await fetch('../data/contents.json');
+        if (!response.ok) {
+          throw new Error('فشل في جلب البيانات.');
+        }
+        const contents = await response.json();
+        displayContents(contents);
+      } catch (error) {
+        console.error(error);
+        alert('حدث خطأ أثناء جلب المحتوى.');
       }
     }
+
+    function displayContents(contents) {
+      const tableBody = document.getElementById('content-table-body');
+      tableBody.innerHTML = '';
+
+      contents.forEach(content => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${content.title}</td>
+          <td>${content.description}</td>
+          <td>${content.date}</td>
+          <td class="actions">
+            <button onclick="editContent(${content.id})">تعديل</button>
+            <button onclick="deleteContent(${content.id})">حذف</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function editContent(contentId) {
+      window.location.href = `edit-content.html?content_id=${contentId}`;
+    }
+
+    async function deleteContent(contentId) {
+      if (confirm('هل أنت متأكد من حذف هذا المحتوى؟')) {
+        try {
+          const response = await fetch('delete-content.php', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: contentId }),
+          });
+
+          if (response.ok) {
+            alert('تم حذف المحتوى بنجاح.');
+            fetchContents(); // إعادة تحميل البيانات بعد الحذف
+          } else {
+            const errorData = await response.json();
+            alert(`خطأ أثناء حذف المحتوى: ${errorData.message || response.statusText}`);
+          }
+        } catch (error) {
+          console.error('حدث خطأ:', error);
+          alert('فشل الاتصال بالخادم.');
+        }
+      }
+    }
+
+    // استدعاء دالة جلب البيانات عند تحميل الصفحة
+    fetchContents();
   </script>
 </body>
 </html>
