@@ -75,12 +75,13 @@ $targetFile = $targetDir . $newImageName;
 
 // رفع الصورة
 if (move_uploaded_file($image["tmp_name"], $targetFile)) {
-    // إضافة المحتوى الجديد إلى مصفوفة المحتويات
+    // إضافة المحتوى الجديد إلى مصفوفة المحتويات مع تاريخ الإنشاء
     $newContent = [
         'id' => $newId,
         'title' => $title,
         'description' => $description,
-        'image_name' => $newImageName
+        'image_name' => $newImageName,
+        'date' => date('Y-m-d H:i:s') // إضافة تاريخ الإنشاء
     ];
     $contents[] = $newContent;
 
