@@ -1,0 +1,23 @@
+[
+  {
+    "id": 0,
+    "title": "تطوير الويب",
+    "description": "تعلم تطوير مواقع الويب باستخدام أحدث التقنيات.",
+    "image_name": "web-development.png",
+    "date": "2024-01-20"
+  },
+  {
+    "id": 1,
+    "title": "تطوير تطبيقات الجوال",
+    "description": "دورة متكاملة لتطوير تطبيقات الجوال.",
+    "image_name": "mobile-development.jpg",
+    "date": "2024-03-05"
+  },
+  {
+    "id": 2,
+    "title": "التسويق الرقمي",
+    "description": "تعلم كيفية الترويج لعلامتك التجارية عبر الإنترنت.",
+    "image_name": "digital-marketing.png",
+    "date": "2024-04-18"
+  }
+]
