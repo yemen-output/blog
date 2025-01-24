@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تسجيل في دورة - OUT PUT للعلوم التقنية </title>
+  <title>تسجيل في دورة - OUT PUT للعلوم التقنية</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="./main.css">
@@ -38,7 +38,9 @@
   <header>
     <div class="logo">
       <h1>OUT PUT للعلوم التقنية</h1>
-      <p>نبرمج لنبني المستقبل</p>
+      <p>
+        نبرمج لنبني المستقبل
+      </p>
     </div>
     <nav>
       <ul>
@@ -49,7 +51,7 @@
         <li><a href="request-service.html">طلب خدمة</a></li>
         <li><a href="course-registration.html">تسجيل في دورة</a></li>
         <li><a href="volunteer.html">تطوع معنا</a></li>
-        <li><a href="admin/login.html">تسجيل الدخول</a></li>
+        <li><a href="admin/login.php">تسجيل الدخول</a></li>
       </ul>
     </nav>
   </header>
@@ -57,22 +59,22 @@
   <section id="course-registration">
     <h2>تسجيل في دورة</h2>
     <form id="course-form">
-      <input class="section-content" type="text" placeholder="الاسم الكامل" required>
-      <input class="section-content" type="email" placeholder="البريد الإلكتروني" required>
-      <input class="section-content" type="tel" placeholder="رقم الهاتف" required>
-      <select class="section-content" required>
+      <input class="section-content" type="text" name="full_name" placeholder="الاسم الكامل" required>
+      <input class="section-content" type="email" name="email" placeholder="البريد الإلكتروني" required>
+      <input class="section-content" type="tel" name="phone" placeholder="رقم الهاتف" required>
+      <select id="courses" class="section-content" name="course_id" required>
         <option value="">اختر الدورة</option>
-        <option value="web-development">تطوير الويب</option>
-        <option value="mobile-development">تطوير تطبيقات الجوال</option>
-        <option value="digital-marketing">التسويق الرقمي</option>
+        <!-- سيتم جلب الدورات هنا -->
       </select>
-      <textarea class="section-content" placeholder="ملاحظات (اختياري)"></textarea>
+      <textarea class="section-content" name="notes" placeholder="ملاحظات (اختياري)"></textarea>
       <button type="submit">تسجيل</button>
     </form>
   </section>
 
   <footer>
-    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
   </footer>
 
   <button class="theme-switcher" onclick="toggleTheme()">
@@ -81,15 +83,73 @@
 
   <script src="./script.js"></script>
   <script>
+    // جلب بيانات الدورات
+    async function fetchCourses() {
+      try {
+        const response = await fetch('data/courses.json');
+        if (!response.ok) {
+          throw new Error('فشل في جلب بيانات الدورات.');
+        }
+        const courses = await response.json();
+        populateCoursesSelect(courses);
+        selectCourseFromQuery();
+      } catch (error) {
+        console.error(error);
+        alert('حدث خطأ أثناء جلب بيانات الدورات.');
+      }
+    }
+
+    // ملء قائمة الدورات
+    function populateCoursesSelect(courses) {
+      const select = document.getElementById('courses');
+      courses.forEach(course => {
+        const option = document.createElement('option');
+        option.value = course.id;
+        option.textContent = course.title;
+        option.dataset.id = course.id;
+        select.appendChild(option);
+      });
+    }
+
+    // اختيار الدورة من query
+    function selectCourseFromQuery() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseId = urlParams.get('course_id');
+      if (courseId) {
+        const coursesSelect = document.getElementById('courses');
+        const optionToSelect = coursesSelect.querySelector(`option[data-id="${courseId}"]`);
+        if (optionToSelect) {
+          optionToSelect.selected = true;
+        }
+      }
+    }
+
+    // استدعاء دالة جلب بيانات الدورات عند تحميل الصفحة
+    fetchCourses();
+
     // إدارة نموذج التسجيل في الدورة
     const courseForm = document.getElementById('course-form');
     if (courseForm) {
       courseForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        alert('تم تسجيلك في الدورة بنجاح!');
-        courseForm.reset();
-        
-        // send the course registration request to the developer <php>
+        const formData = new FormData(courseForm);
+        fetch('add_course_registration.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error)
+          } else {
+            alert(data.message)
+            courseForm.reset();
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred during sending the registration.');
+        });
       });
     }
   </script>
