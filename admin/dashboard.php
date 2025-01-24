@@ -5,12 +5,10 @@ session_start();
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     // تم تسجيل الدخول بنجاح
     http_response_code(200); // OK
-    exit; // لا تفعل شيئًا آخر
 } else {
     // تسجيل الدخول غير صحيح
     http_response_code(302); // Found (Redirection)
     header('Location: ../index.html'); // إعادة التوجيه إلى الصفحة الرئيسية
-    exit;
 }
 ?>
 
@@ -61,6 +59,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   <section id="dashboard">
     <h2>إدارة الموقع</h2>
     <div class="admin-actions">
+      <button onclick="notifications()">الاشعارات</button>
       <button onclick="manageUsers()">إدارة المستخدمين</button>
       <button onclick="manageCourses()">إدارة الدورات</button>
       <button onclick="manageVolunteers()">إدارة المتطوعين</button>
@@ -82,6 +81,10 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   <script src="../script.js"></script>
   <script>
     // وظائف لوحة التحكم
+    function notifications() {
+      alert('سيتم فتح صفحة الاشعارات .');
+      window.location.href = "notifications.php";
+    }
     function manageUsers() {
       alert('سيتم فتح صفحة إدارة المستخدمين.');
       window.location.href = "manage-users.php";
