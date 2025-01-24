@@ -1,0 +1,23 @@
+[
+  {
+    "id": 0,
+    "title": "تصميم المواقع",
+    "description": "نقدم خدمات تصميم مواقع احترافية بتقنيات حديثة.",
+    "image_name": "web-design.jpg",
+    "date": "2023-05-10"
+  },
+  {
+    "id": 1,
+    "title": "تطبيقات الجوال",
+    "description": "تصميم وتطوير تطبيقات الجوال لأنظمة iOS و Android.",
+    "image_name": "mobile-apps.jpg",
+    "date": "2023-07-22"
+  },
+  {
+    "id": 2,
+    "title": "التسويق الإلكتروني",
+    "description": "حلول تسويقية مبتكرة لزيادة حضورك الرقمي.",
+    "image_name": "marketing.jpg",
+    "date": "2023-09-15"
+  }
+]
