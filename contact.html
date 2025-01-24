@@ -38,7 +38,9 @@
   <header>
     <div class="logo">
       <h1>OUT PUT للعلوم التقنية</h1>
-      <p>نبرمج لنبني المستقبل</p>
+      <p>
+        نبرمج لنبني المستقبل
+      </p>
     </div>
     <nav>
       <ul>
@@ -47,7 +49,7 @@
         <li><a href="team.html">فريقنا</a></li>
         <li><a href="contact.html">تواصل معنا</a></li>
         <li><a href="request-service.html">طلب خدمة</a></li>
-        <li><a href="admin/login.html">تسجيل الدخول</a></li>
+        <li><a href="admin/login.php">تسجيل الدخول</a></li>
       </ul>
     </nav>
   </header>
@@ -55,21 +57,23 @@
   <section id="contact">
     <h2>تواصل معنا</h2>
     <form id="contact-form">
-      <input class="section-content" type="text" placeholder="اسمك" required>
-      <input class="section-content" type="tel" placeholder="رقم الهاتف" required>
-      <textarea class="section-content" placeholder="رسالتك" required></textarea>
+      <input class="section-content" type="text" name="name" placeholder="اسمك" required>
+      <input class="section-content" type="tel" name="phone" placeholder="رقم الهاتف" required>
+      <textarea class="section-content" name="message" placeholder="رسالتك" required></textarea>
       <button type="submit">إرسال</button>
     </form>
   </section>
 
   <footer>
-    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
   </footer>
-  
+
   <button class="theme-switcher" onclick="toggleTheme()">
     <i class="fas fa-moon"></i>
   </button>
-  
+
   <script src="./script.js"></script>
   <script>
     // إدارة نموذج التواصل
@@ -77,10 +81,24 @@
     if (contactForm) {
       contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        alert('تم إرسال رسالتك بنجاح!');
-        contactForm.reset();
-        
-        // send the message to the developer <php>
+        const formData = new FormData(contactForm);
+        fetch('add_contact.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error)
+          } else {
+            alert(data.message)
+            contactForm.reset();
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred during sending the message.');
+        });
       });
     }
   </script>
