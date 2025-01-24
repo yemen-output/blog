@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>خدماتنا - OUT PUT للعلوم التقنية </title>
+  <title>خدماتنا - OUT PUT للعلوم التقنية</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="./main.css">
@@ -19,7 +19,7 @@
       border: 1px solid #ddd;
       border-radius: 8px;
       padding: 20px;
-      width: calc(33.333% - 20px);
+      width: calc(33.333% - 40px);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s, box-shadow 0.3s;
     }
@@ -61,15 +61,20 @@
       background-color: var(--secondary-color);
     }
     /* تصميم متجاوب */
-@media (max-width: 768px) {
+    @media (max-width: 768px) {
       .service-item {
-        width: calc(50% - 20px);
+        width: calc(50% - 40px);
       }
     }
-@media (max-width: 480px) {
+    @media (max-width: 480px) {
       .service-item {
         width: 100%;
       }
+    }
+    .service-item img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -77,9 +82,7 @@
   <header>
     <div class="logo">
       <h1>OUT PUT للعلوم التقنية</h1>
-      <p>
-        نبرمج لنبني المستقبل
-      </p>
+      <p>نبرمج لنبني المستقبل</p>
     </div>
     <nav>
       <ul>
@@ -88,7 +91,7 @@
         <li><a href="team.html">فريقنا</a></li>
         <li><a href="contact.html">تواصل معنا</a></li>
         <li><a href="request-service.html">طلب خدمة</a></li>
-        <li><a href="admin/login.html">تسجيل الدخول</a></li>
+        <li><a href="admin/login.php">تسجيل الدخول</a></li>
       </ul>
     </nav>
   </header>
@@ -96,43 +99,12 @@
   <section id="services">
     <h2>خدماتنا</h2>
     <div class="service-list">
-      <div class="service-item section-content" data-id="0">
-        <h3>تصميم المواقع</h3>
-        <p>
-          نقدم خدمات تصميم مواقع احترافية بتقنيات حديثة.
-        </p>
-        <div class="buttons">
-          <button class="more-details">تفاصيل أكثر</button>
-          <button class="request-service">طلب الخدمة</button>
-        </div>
-      </div>
-      <div class="service-item section-content" data-id="1">
-        <h3>تطبيقات الجوال</h3>
-        <p>
-          تصميم وتطوير تطبيقات الجوال لأنظمة iOS و Android.
-        </p>
-        <div class="buttons">
-          <button class="more-details">تفاصيل أكثر</button>
-          <button class="request-service">طلب الخدمة</button>
-        </div>
-      </div>
-      <div class="service-item section-content" data-id="2">
-        <h3>التسويق الإلكتروني</h3>
-        <p>
-          حلول تسويقية مبتكرة لزيادة حضورك الرقمي.
-        </p>
-        <div class="buttons">
-          <button class="more-details">تفاصيل أكثر</button>
-          <button class="request-service">طلب الخدمة</button>
-        </div>
-      </div>
+      <!-- سيتم جلب الخدمات هنا -->
     </div>
   </section>
 
   <footer>
-    <p>
-      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
-    </p>
+    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
   </footer>
 
   <button class="theme-switcher" onclick="toggleTheme()">
@@ -141,13 +113,52 @@
 
   <script src="./script.js"></script>
   <script>
-    const requestServiceButtons = document.querySelectorAll("button.request-service");
-    requestServiceButtons.forEach((button)=>{
-      button.addEventListener("click", ()=>{
-        const id = button.parentElement.parentElement.dataset.id;
-        window.location.href = `request-service.html?service_id=${id}`;
+    // جلب وعرض بيانات الخدمات
+    async function fetchServices() {
+      try {
+        const response = await fetch('data/services.json');
+        if (!response.ok) {
+          throw new Error('فشل في جلب بيانات الخدمات.');
+        }
+        const services = await response.json();
+        displayServices(services);
+      } catch (error) {
+        console.error(error);
+        alert('حدث خطأ أثناء جلب بيانات الخدمات.');
+      }
+    }
+
+    // عرض الخدمات في الصفحة
+    function displayServices(services) {
+      const serviceList = document.querySelector('.service-list');
+      services.forEach(service => {
+        const serviceItem = document.createElement('div');
+        serviceItem.classList.add('service-item', 'section-content');
+        serviceItem.dataset.id = service.id;
+        serviceItem.innerHTML = `
+          <img src="data/service-images/${service.image_name}" alt="${service.title}">
+          <h3>${service.title}</h3>
+          <p>${service.description}</p>
+          <div class="buttons">
+            <button class="more-details">تفاصيل أكثر</button>
+            <button class="request-service">طلب الخدمة</button>
+          </div>
+        `;
+        serviceList.appendChild(serviceItem);
       });
-    })
+
+      // إضافة حدث النقر لطلب الخدمة
+      const requestServiceButtons = document.querySelectorAll(".request-service");
+      requestServiceButtons.forEach((button)=>{
+        button.addEventListener("click", ()=>{
+          const id = button.parentElement.parentElement.dataset.id;
+          window.location.href = `request-service.html?service_id=${id}`;
+        });
+      })
+    }
+
+    // استدعاء دالة جلب بيانات الخدمات عند تحميل الصفحة
+    fetchServices();
   </script>
 </body>
 </html>
