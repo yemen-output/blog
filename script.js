@@ -59,3 +59,17 @@ window.addEventListener('scroll', () => {
     scrollToTopBtn.style.display = 'none';
   }
 });
+
+async function checkLogin() {
+  try {
+    const response = await fetch('admin/check-login.php');
+    const data = await response.json();
+
+    if (!response.ok || !data.logged_in) {
+      window.location.href = 'admin/login.php';
+    }
+  } catch (error) {
+    console.error('حدث خطأ:', error);
+    alert('فشل في التحقق من حالة تسجيل الدخول.');
+  }
+}
