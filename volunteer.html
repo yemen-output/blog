@@ -51,7 +51,7 @@
         <li><a href="request-service.html">طلب خدمة</a></li>
         <li><a href="course-registration.html">تسجيل في دورة</a></li>
         <li><a href="volunteer.html">تطوع معنا</a></li>
-        <li><a href="admin/login.html">تسجيل الدخول</a></li>
+        <li><a href="admin/login.php">تسجيل الدخول</a></li>
       </ul>
     </nav>
   </header>
@@ -59,16 +59,18 @@
   <section id="volunteer">
     <h2>تطوع معنا</h2>
     <form id="volunteer-form">
-      <input class="section-content" type="text" placeholder="الاسم الكامل" required>
-      <input class="section-content" type="text" placeholder="المحافظة" required>
-      <input class="section-content" type="text" placeholder="التخصص" required>
-      <input class="section-content" type="text" placeholder="السنة الدراسية" required>
-      <p style="color:#CE9D06">⚠️ إذا كنت متخرج ، اكتب في خانة السنة الدراسية متخرج مع سنة التخرج</p>
-      <input class="section-content" type="text" placeholder="مجال التطوع" required>
-      <textarea class="section-content" type="text" placeholder="ماذا يمكن ان تقدم للفريق"></textarea>
-      <textarea class="section-content" type="text" placeholder="ماذا تريد من الفريق ان يقدمه لك"></textarea>
-      <input class="section-content" type="tel" placeholder="رقم الهاتف" required>
-      <input class="section-content" type="text" placeholder="هل تستطيع تقديم دورات تدريبية في المنصة؟" required>
+      <input class="section-content" type="text" name="full_name" placeholder="الاسم الكامل" required>
+      <input class="section-content" type="text" name="governorate" placeholder="المحافظة" required>
+      <input class="section-content" type="text" name="specialization" placeholder="التخصص" required>
+      <input class="section-content" type="text" name="academic_year" placeholder="السنة الدراسية" required>
+      <p style="color:#CE9D06">
+        ⚠️ إذا كنت متخرج ، اكتب في خانة السنة الدراسية متخرج مع سنة التخرج
+      </p>
+      <input class="section-content" type="text" name="volunteer_area" placeholder="مجال التطوع" required>
+      <textarea class="section-content" name="contribution" placeholder="ماذا يمكن ان تقدم للفريق"></textarea>
+      <textarea class="section-content" name="expectation" placeholder="ماذا تريد من الفريق ان يقدمه لك"></textarea>
+      <input class="section-content" type="tel" name="phone" placeholder="رقم الهاتف" required>
+      <input class="section-content" type="text" name="can_train" placeholder="هل تستطيع تقديم دورات تدريبية في المنصة؟" required>
       <button type="submit">تقديم الطلب</button>
     </form>
   </section>
@@ -90,27 +92,26 @@
     if (volunteerForm) {
       volunteerForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        alert('تم تقديم طلب التطوع بنجاح!');
-        volunteerForm.reset();
 
-        // send the volunteer request to the developer <php>
+        const formData = new FormData(volunteerForm);
+        fetch('add_volunteer.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error)
+          } else {
+            alert(data.message)
+            volunteerForm.reset();
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred during sending the request.');
+        });
       });
-    }
-
-
-
-    const form = {
-      "full_name": "Malak Salah Ali Al-Shami",
-      "current_location": "Amanat Al-Asimah",
-      "major": "Mechatronics Engineering",
-      "graduation_year": "Graduate 2022-2023",
-      "skills_offer_to_team": [
-        "Excellent background in C and C++ languages",
-        "Intermediate in Python language",
-        "Proficient in designing and implementing embedded systems and control systems like Arduino and PLC"
-      ],
-      "expectations_from_team": "Benefit from the team's experiences in various programming languages",
-      "can_offer_training": "Yes, in the areas I am proficient in"
     }
   </script>
 </body>
