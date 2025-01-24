@@ -5,12 +5,10 @@ session_start();
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     // تم تسجيل الدخول بنجاح
     http_response_code(200); // OK
-    exit; // لا تفعل شيئًا آخر
 } else {
     // تسجيل الدخول غير صحيح
     http_response_code(302); // Found (Redirection)
     header('Location: ../index.html'); // إعادة التوجيه إلى الصفحة الرئيسية
-    exit;
 }
 ?>
 
