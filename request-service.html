@@ -49,7 +49,7 @@
         <li><a href="team.html">فريقنا</a></li>
         <li><a href="contact.html">تواصل معنا</a></li>
         <li><a href="request-service.html">طلب خدمة</a></li>
-        <li><a href="admin/login.html">تسجيل الدخول</a></li>
+        <li><a href="admin/login.php">تسجيل الدخول</a></li>
       </ul>
     </nav>
   </header>
@@ -57,20 +57,13 @@
   <section id="request-service">
     <h2>طلب خدمة</h2>
     <form id="service-form">
-      <input class="section-content" type="text" placeholder="اسمك" required>
-      <input class="section-content" type="tel" placeholder="رقم الهاتف" required>
-      <select id="services" class="section-content" required>
+      <input class="section-content" type="text" name="name" placeholder="اسمك" required>
+      <input class="section-content" type="tel" name="phone" placeholder="رقم الهاتف" required>
+      <select id="services" class="section-content" name="service_id" required>
         <option value="">اختر الخدمة</option>
-
-
-        <!-- fetch services <php> -->
-
-
-        <option value="web-design" data-id="0">تصميم المواقع</option>
-        <option value="mobile-apps" data-id="1">تطبيقات الجوال</option>
-        <option value="marketing" data-id="2">التسويق الإلكتروني</option>
+        <!-- Services will be added here dynamically -->
       </select>
-      <textarea class="section-content" placeholder="تفاصيل الطلب" required></textarea>
+      <textarea class="section-content" name="details" placeholder="تفاصيل الطلب" required></textarea>
       <button type="submit">إرسال الطلب</button>
     </form>
   </section>
@@ -89,16 +82,56 @@
   <script>
     // إدارة نموذج طلب الخدمة
     const serviceForm = document.getElementById('service-form');
+    const servicesSelect = document.getElementById('services');
+
+    // Function to fetch services from JSON
+    async function fetchServices() {
+      try {
+        const response = await fetch('data/services.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch services.');
+        }
+        const servicesData = await response.json();
+        displayServices(servicesData);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+        alert('An error occurred while fetching services.');
+      }
+    }
+
+    // Function to display services in the select element
+    function displayServices(servicesData) {
+      servicesData.forEach(service => {
+        const option = document.createElement('option');
+        option.value = service.id;
+        option.textContent = service.title;
+        option.dataset.id = service.id;
+        servicesSelect.appendChild(option);
+      });
+    }
     if (serviceForm) {
       serviceForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        alert('تم إرسال طلبك بنجاح!');
-        serviceForm.reset();
-
-        // send the service request to the developer <php>
+        const formData = new FormData(serviceForm);
+        fetch('add_request.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error);
+          } else {
+            alert(data.message);
+            serviceForm.reset();
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred during sending the request.');
+        });
       });
     }
-
     const urlParams = new URLSearchParams(window.location.search);
     const serviceId = urlParams.get('service_id');
     if (serviceId) {
@@ -108,6 +141,7 @@
       });
       Object.values(services).filter((service)=>service.dataset.id == serviceId)[0].setAttribute("selected", "true");
     }
+    fetchServices();
   </script>
 </body>
 </html>
