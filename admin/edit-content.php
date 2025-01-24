@@ -1,110 +1,213 @@
 <?php
-header('Content-Type: application/json');
+session_start();
 
-// التحقق من طريقة الطلب
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405); // Method Not Allowed
-    echo json_encode(['message' => 'طلب غير مسموح']);
+// التحقق من تسجيل الدخول
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+    // تم تسجيل الدخول بنجاح
+    http_response_code(200); // OK
+    exit; // لا تفعل شيئًا آخر
+} else {
+    // تسجيل الدخول غير صحيح
+    http_response_code(302); // Found (Redirection)
+    header('Location: ../index.html'); // إعادة التوجيه إلى الصفحة الرئيسية
     exit;
 }
-
-// التحقق من البيانات المستلمة
-if (!isset($_POST['id'])) {
-    http_response_code(400); // Bad Request
-    echo json_encode(['message' => 'يرجى تحديد معرف المحتوى']);
-    exit;
-}
-
-// جلب البيانات
-$id = intval($_POST['id']);
-$title = isset($_POST['title']) ? htmlspecialchars($_POST['title']) : null;
-$description = isset($_POST['description']) ? htmlspecialchars($_POST['description']) : null;
-$image = isset($_FILES['image']) ? $_FILES['image'] : null;
-
-// قراءة محتويات ملف contents.json
-$contentsFile = '../data/contents.json';
-if (!file_exists($contentsFile)) {
-    http_response_code(404); // Not Found
-    echo json_encode(['message' => 'ملف المحتويات غير موجود']);
-    exit;
-}
-$contents = json_decode(file_get_contents($contentsFile), true);
-
-// البحث عن المحتوى المراد تعديله
-$contentIndex = -1;
-foreach ($contents as $index => $content) {
-    if ($content['id'] === $id) {
-        $contentIndex = $index;
-        break;
-    }
-}
-
-if ($contentIndex === -1) {
-    http_response_code(404); // Not Found
-    echo json_encode(['message' => 'المحتوى غير موجود']);
-    exit;
-}
-
-// معالجة رفع الصورة الجديدة (اختياري)
-if ($image) {
-    $targetDir = "../data/content-images/";
-
-    // التأكد من وجود المجلد وإلا قم بإنشائه
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0777, true);
-    }
-
-    $imageFileType = strtolower(pathinfo($image["name"], PATHINFO_EXTENSION));
-
-    // التحقق مما إذا كان الملف المرفوع صورة بالفعل
-    $check = getimagesize($image["tmp_name"]);
-    if ($check === false) {
-        echo json_encode(['message' => 'الملف المرفوع ليس صورة.']);
-        exit;
-    }
-
-    // تحقق من حجم الملف (مثال: 5 ميغابايت)
-    if ($image["size"] > 5000000) {
-        echo json_encode(['message' => 'حجم الصورة كبير جدًا.']);
-        exit;
-    }
-
-    // السماح فقط بأنواع معينة من الصور
-    if ($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
-        echo json_encode(['message' => "عذرًا، يُسمح فقط برفع ملفات JPG و JPEG و PNG و GIF."]);
-        exit;
-    }
-
-    // حذف الصورة القديمة
-    $oldImage = $targetDir . $contents[$contentIndex]['image_name'];
-    if (file_exists($oldImage)) {
-        unlink($oldImage);
-    }
-
-    // إنشاء اسم الصورة الجديدة
-    $newImageName = $id . '.' . $imageFileType;
-    $targetFile = $targetDir . $newImageName;
-
-    // رفع الصورة الجديدة
-    if (move_uploaded_file($image["tmp_name"], $targetFile)) {
-        $contents[$contentIndex]['image_name'] = $newImageName;
-    } else {
-        http_response_code(500); // Internal Server Error
-        echo json_encode(['message' => 'حدث خطأ أثناء رفع الصورة']);
-        exit;
-    }
-}
-
-// تحديث العنوان والوصف (اختياري)
-if ($title !== null) {
-    $contents[$contentIndex]['title'] = $title;
-}
-if ($description !== null) {
-    $contents[$contentIndex]['description'] = $description;
-}
-
-// حفظ التغييرات في ملف contents.json
-file_put_contents($contentsFile, json_encode($contents, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-
-echo json_encode(['message' => 'تم تعديل المحتوى بنجاح']);
 ?>
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تعديل محتوى - OUT PUT للعلوم التقنية</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="../main.css">
+  <style>
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+    button {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: var(--secondary-color);
+    }
+    #image-preview {
+      max-width: 200px;
+      max-height: 200px;
+      margin-bottom: 10px;
+      display: none;
+    }
+    .error-message {
+      color: red;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>لوحة التحكم</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../index.html">العودة للرئيسية</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section>
+    <h2>تعديل محتوى</h2>
+    <div id="error-container" class="error-message" style="display: none;"></div>
+    <form id="edit-content-form" style="display: none;">
+      <input id="content-title" class="section-content" type="text" placeholder="عنوان المحتوى" required>
+      <textarea id="content-description" class="section-content" rows="8" cols="40" placeholder="وصف المحتوى"></textarea>
+      <input type="file" id="content-image" accept="image/*" onchange="previewImage()">
+      <img id="image-preview" src="#" alt="معاينة الصورة">
+      <button type="submit">تعديل المحتوى</button>
+    </form>
+    <div id="buttons-container" class="action-buttons" style="display: none;">
+      <a href="manage-content.html"><button>إدارة المحتوى</button></a>
+      <a href="create-content.html"><button>إنشاء محتوى جديد</button></a>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
+  </footer>
+
+  <button class="theme-switcher" onclick="toggleTheme()">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <script src="../script.js"></script>
+  <script>
+    // استخراج معرف المحتوى من رابط الصفحة
+    const urlParams = new URLSearchParams(window.location.search);
+    const contentId = urlParams.get('content_id');
+
+    // وظيفة لمعاينة الصورة قبل الرفع
+    function previewImage() {
+      const preview = document.getElementById('image-preview');
+      const file = document.getElementById('content-image').files[0];
+      const reader = new FileReader();
+
+      reader.onloadend = function() {
+        preview.src = reader.result;
+        preview.style.display = 'block';
+      }
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = "#";
+        preview.style.display = 'none';
+      }
+    }
+
+    // دالة لجلب بيانات المحتوى
+    async function fetchContentData() {
+      if (!contentId) {
+        displayError('لم يتم تحديد معرف المحتوى.');
+        return;
+      }
+
+      try {
+        const response = await fetch('../data/contents.json');
+        if (!response.ok) {
+          throw new Error('فشل في جلب بيانات المحتوى.');
+        }
+        const contents = await response.json();
+        const content = contents.find(item => item.id === parseInt(contentId));
+
+        if (!content) {
+          displayError('المحتوى غير موجود.');
+          return;
+        }
+
+        // ملء حقول النموذج ببيانات المحتوى
+        document.getElementById('content-title').value = content.title;
+        document.getElementById('content-description').value = content.description;
+        document.getElementById('image-preview').src = `../data/content-images/${content.image_name}`;
+        document.getElementById('image-preview').style.display = 'block';
+
+        // إظهار النموذج
+        document.getElementById('edit-content-form').style.display = 'flex';
+
+      } catch (error) {
+        console.error(error);
+        displayError('حدث خطأ أثناء جلب بيانات المحتوى.');
+      }
+    }
+
+    // دالة لعرض رسالة الخطأ
+    function displayError(message) {
+      const errorContainer = document.getElementById('error-container');
+      errorContainer.textContent = message;
+      errorContainer.style.display = 'block';
+      document.getElementById('buttons-container').style.display = 'flex';
+    }
+
+    // معالجة إرسال النموذج
+    document.getElementById('edit-content-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const title = document.getElementById('content-title').value.trim();
+      const description = document.getElementById('content-description').value.trim();
+      const imageInput = document.getElementById('content-image');
+      const file = imageInput.files[0];
+
+      const formData = new FormData();
+      formData.append('id', contentId);
+      if (title) formData.append('title', title);
+      if (description) formData.append('description', description);
+      if (file) formData.append('image', file);
+
+      try {
+        const response = await fetch('edit_content.php', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          alert(`تم تعديل المحتوى بنجاح: ${data.message}`);
+          window.location.href = 'manage-content.php'; // الانتقال إلى صفحة إدارة المحتوى
+        } else {
+          alert(`خطأ أثناء تعديل المحتوى: ${response.statusText}`);
+        }
+      } catch (error) {
+        console.error('حدث خطأ:', error);
+        alert('فشل الاتصال بالخادم.');
+      }
+    });
+
+    // استدعاء دالة جلب بيانات المحتوى عند تحميل الصفحة
+    fetchContentData();
+  </script>
+</body>
+</html>
