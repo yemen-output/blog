@@ -59,3 +59,75 @@ window.addEventListener('scroll', () => {
     scrollToTopBtn.style.display = 'none';
   }
 });
+
+async function makePostRequest(url, data) {
+  try {
+    const formData = new FormData();
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+    const response = await fetch(url, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error during POST request:', error);
+    throw error; // إعادة رمي الخطأ ليتم التقاطه في المكان الذي يستدعي هذه الدالة
+  }
+}
+
+/*async function exportComments() {
+  try {
+    const data = await makePostRequest('admin/export_comments.php');
+    return data;
+
+  } catch (error) {
+    console.error('An error occurred while exporting comments:', error);
+  }
+}
+
+async function exportRequests() {
+  try {
+    const data = await makePostRequest('admin/export_requests.php');
+    return data;
+
+  } catch (error) {
+    console.error('An error occurred while exporting requests:', error);
+
+  }
+}
+
+async function exportVolunteers() {
+  try {
+    const data = await makePostRequest('admin/export_volunteers.php');
+    return data;
+
+  } catch (error) {
+    console.error('An error occurred while exporting volunteers:', error);
+  }
+}
+
+async function exportContacts() {
+  try {
+    const data = await makePostRequest('admin/export_contacts.php');
+    return data;
+
+  } catch (error) {
+    console.error('An error occurred while exporting contacts:', error);
+  }
+}
+
+async function exportCourses() {
+  try {
+    const data = await makePostRequest('admin/export_courses.php');
+    return data;
+
+  } catch (error) {
+    console.error('An error occurred while exporting courses:', error);
+  }
+}
+*/
