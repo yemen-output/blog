@@ -108,6 +108,16 @@
         option.dataset.id = service.id;
         servicesSelect.appendChild(option);
       });
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const serviceId = urlParams.get('service_id');
+      if (serviceId) {
+        const services = document.querySelectorAll("#services option");
+        Object.values(services).forEach((service)=> {
+          service.removeAttribute("selected");
+        });
+        Object.values(services).filter((service)=>service.dataset.id == serviceId)[0].setAttribute("selected", "true");
+      }
     }
     if (serviceForm) {
       serviceForm.addEventListener('submit', function (e) {
@@ -131,15 +141,6 @@
           alert('An error occurred during sending the request.');
         });
       });
-    }
-    const urlParams = new URLSearchParams(window.location.search);
-    const serviceId = urlParams.get('service_id');
-    if (serviceId) {
-      const services = document.querySelectorAll("#services option");
-      Object.values(services).forEach((service)=> {
-        service.removeAttribute("selected");
-      });
-      Object.values(services).filter((service)=>service.dataset.id == serviceId)[0].setAttribute("selected", "true");
     }
     fetchServices();
   </script>
