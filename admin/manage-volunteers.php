@@ -3,12 +3,12 @@ session_start();
 
 // التحقق من تسجيل الدخول
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    // تم تسجيل الدخول بنجاح
-    http_response_code(200); // OK
+  // تم تسجيل الدخول بنجاح
+  http_response_code(200); // OK
 } else {
-    // تسجيل الدخول غير صحيح
-    http_response_code(302); // Found (Redirection)
-    header('Location: ../index.html'); // إعادة التوجيه إلى الصفحة الرئيسية
+  // تسجيل الدخول غير صحيح
+  http_response_code(302); // Found (Redirection)
+  header('Location: ../index.html'); // إعادة التوجيه إلى الصفحة الرئيسية
 }
 ?>
 
@@ -91,12 +91,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   <section id="manage-volunteers">
     <h2>إدارة المتطوعين</h2>
     <div id="table-container">
-      
-      
-      <!-- fetch volunteers <php> -->
-      
-      
-      <table>
+      <table id="volunteers-table">
         <thead>
           <tr>
             <th>الاسم</th>
@@ -108,28 +103,6 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>محمد أحمد</td>
-            <td>عدن</td>
-            <td>777 777 777</td>
-            <td>تطوير الويب</td>
-            <td>قيد المراجعة</td>
-            <td>
-              <button onclick="acceptVolunteer()">قبول</button>
-              <button onclick="rejectVolunteer()">رفض</button>
-            </td>
-          </tr>
-          <tr>
-            <td>فاطمة خالد</td>
-            <td>صنعاء</td>
-            <td>788 788 788</td>
-            <td>التصميم الجرافيكي</td>
-            <td>مقبول</td>
-            <td>
-              <button onclick="acceptVolunteer()">قبول</button>
-              <button onclick="rejectVolunteer()">رفض</button>
-            </td>
-          </tr>
         </tbody>
       </table>
     </div>
@@ -148,19 +121,78 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   <script src="../script.js"></script>
   <script>
     // وظائف إدارة المتطوعين
-    function acceptVolunteer() {
-      alert('تم قبول المتطوع بنجاح.');
-      
-      // accept volunteer <php>
-    }
+    async function fetchVolunteers() {
+      try {
+        const formData = new FormData();
+        formData.append('data_type', 'all');
+        const response = await fetch('get_volunteers_data.php', {
+          method: 'POST',
+          body: formData
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch volunteer data.');
+        }
+        const volunteersData = await response.json();
+        displayVolunteers(volunteersData);
+      } catch (error) {
+        console.error(error);
+        alert('An error occurred while fetching volunteer data.');
 
-    function rejectVolunteer() {
-      if (confirm('هل أنت متأكد من رفض هذا المتطوع؟')) {
-        alert('تم رفض المتطوع بنجاح.');
-        
-        // reject volunteer <php>
       }
     }
+    function displayVolunteers(volunteers) {
+      const tableBody = document.querySelector('#volunteers-table tbody');
+      tableBody.innerHTML = ''; // Clear any existing table rows
+
+      volunteers.forEach(volunteer => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+        <td>${volunteer.full_name}</td>
+        <td>${volunteer.governorate}</td>
+        <td>${volunteer.phone}</td>
+        <td>${volunteer.volunteer_area}</td>
+        <td id="volunteer-status-${volunteer.id}">${volunteer.status}</td>
+        <td>
+        <button onclick="acceptVolunteer(${volunteer.id})">قبول</button>
+        <button onclick="rejectVolunteer(${volunteer.id})">رفض</button>
+        </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+    function acceptVolunteer(volunteerId) {
+      updateVolunteerStatus(volunteerId, 'مقبول');
+    }
+    function rejectVolunteer(volunteerId) {
+      updateVolunteerStatus(volunteerId, 'مرفوض');
+    }
+    async function updateVolunteerStatus(volunteerId, status) {
+      try {
+        const formData = new FormData();
+        formData.append('volunteer_id', volunteerId);
+        formData.append('status', status);
+        const response = await fetch('update_volunteer_status.php', {
+          method: 'POST',
+          body: formData
+        });
+        if (!response.ok) {
+          throw new Error('Failed to update volunteer status.');
+        }
+        const data = await response.json();
+        if (data.error) {
+          alert(data.error)
+
+        } else {
+          const statusCell = document.querySelector(`#volunteer-status-${volunteerId}`);
+          statusCell.textContent = status;
+          alert(data.message)
+        }
+      } catch (error) {
+        console.error(error);
+        alert('An error occurred while updating volunteer status.');
+      }
+    }
+    fetchVolunteers()
   </script>
 </body>
 </html>
