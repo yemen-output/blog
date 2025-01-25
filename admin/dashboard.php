@@ -3,12 +3,12 @@ session_start();
 
 // التحقق من تسجيل الدخول
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    // تم تسجيل الدخول بنجاح
-    http_response_code(200); // OK
+  // تم تسجيل الدخول بنجاح
+  http_response_code(200); // OK
 } else {
-    // تسجيل الدخول غير صحيح
-    http_response_code(302); // Found (Redirection)
-    header('Location: ../index.html'); // إعادة التوجيه إلى الصفحة الرئيسية
+  // تسجيل الدخول غير صحيح
+  http_response_code(302); // Found (Redirection)
+  header('Location: ../index.html'); // إعادة التوجيه إلى الصفحة الرئيسية
 }
 ?>
 
@@ -37,9 +37,26 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
       font-size: 1.1em;
       cursor: pointer;
       transition: background-color 0.3s;
+      position: relative;
+      /* لجعل العلامة absolute بالنسبة للزر */
+
     }
     .admin-actions button:hover {
       background-color: var(--secondary-color);
+    }
+    .notification-indicator {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+      display: none;
+
+    }
+    .notification-indicator.active {
+      display: block;
     }
   </style>
 </head>
@@ -59,67 +76,87 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
   <section id="dashboard">
     <h2>إدارة الموقع</h2>
     <div class="admin-actions">
-      <button onclick="notifications()">الاشعارات</button>
+      <button onclick="notifications()" id="notification-button">
+        الاشعارات
+        <!--<span class="notification-indicator" id="notification-indicator"></span>-->
+      </button>
       <button onclick="manageUsers()">إدارة المستخدمين</button>
-      <button onclick="manageCourses()">إدارة الدورات</button>
+      <button onclick="manageCoursesRegistrations()">إدارة تسجيل الدورات</button>
       <button onclick="manageVolunteers()">إدارة المتطوعين</button>
+      <button onclick="manageServicesRequests()">إدارة طلبات الخدمات</button>
+
       <button onclick="manageContent()">إدارة المحتوى</button>
-      <button onclick="manageServices()">إدارة الخدمات</button>
       <button onclick="viewStatistics()">عرض الإحصائيات</button>
       <button onclick="siteSettings()">إعدادات الموقع</button>
     </div>
   </section>
 
   <footer>
-    <p>© 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.</p>
+    <p>
+      © 2023 OUT PUT للعلوم التقنية. جميع الحقوق محفوظة.
+    </p>
   </footer>
 
   <button class="theme-switcher" onclick="toggleTheme()">
     <i class="fas fa-moon"></i>
   </button>
-  
+
   <script src="../script.js"></script>
   <script>
+    /*async function checkForNotifications() {
+      try {
+        const data = await fetch('check_for_notifications.php', {
+          method: "POST"
+        });
+        console.log(data);
+        return data.json();
+
+      } catch (error) {
+        console.error('Error checking for notifications:', error);
+      }
+    }*/
+
     // وظائف لوحة التحكم
     function notifications() {
-      alert('سيتم فتح صفحة الاشعارات .');
       window.location.href = "notifications.php";
     }
     function manageUsers() {
-      alert('سيتم فتح صفحة إدارة المستخدمين.');
       window.location.href = "manage-users.php";
     }
 
-    function manageCourses() {
-      alert('سيتم فتح صفحة إدارة الدورات.');
-      window.location.href = "manage-courses.php";
+    function manageCoursesRegistrations() {
+      window.location.href = "manage-courses-registrations.php";
     }
-
     function manageVolunteers() {
-      alert('سيتم فتح صفحة إدارة المتطوعين.');
       window.location.href = "manage-volunteers.php";
     }
-    
-    function manageServices() {
-      alert('سيتم فتح صفحة إدارة الخدمات.');
+    function manageServicesRequests() {
+      window.location.href = "manage-service-requests.php";
 
-      window.location.href = "manage-services.php";
     }
-
     function manageContent() {
-      alert('سيتم فتح صفحة إدارة المحتوى.');
       window.location.href = "manage-content.php";
     }
 
     function viewStatistics() {
-      alert('سيتم فتح صفحة الإحصائيات.');
       window.location.href = "statistics.php";
     }
 
     function siteSettings() {
-      alert('سيتم فتح صفحة إعدادات الموقع.');
       window.location.href = "settings.php";
     }
+
+    /*function updateNotificationIndicator(hasNotifications) {
+      /*const notificationIndicator = document.getElementById('notification-indicator');
+      if (hasNotifications === true) {
+        notificationIndicator.classList.add('active');
+      } else {
+        notificationIndicator.classList.remove('active');
+      }
+    }
+
+    checkForNotifications().then(updateNotificationIndicator);*/
+
   </script>
 </body>
 </html>
