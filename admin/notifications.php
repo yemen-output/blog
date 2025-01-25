@@ -45,6 +45,18 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     .notification-item h3 {
       margin-bottom: 10px;
     }
+    button {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px
+    }
+    button:hover {
+      background-color: var(--secondary-color);
+    }
   </style>
 </head>
 <body>
@@ -64,6 +76,7 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     <div id="notifications-container">
       <!-- سيتم إضافة الإشعارات هنا باستخدام JavaScript -->
     </div>
+    <!--<button id="load-old-notifications">فتح الإشعارات القديمة</button>-->
   </section>
 
   <footer>
@@ -77,11 +90,51 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
   <script src="../script.js"></script>
   <script>
+    async function exportData(type) {
+      try {
+        // استدعاء ملف الحفظ
+        const exportResponse = await fetch('export_to_json.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'type=' + type,
+        });
+
+        if (!exportResponse.ok) {
+          throw new Error('Error exporting data to JSON.');
+        }
+
+        const exportData = await exportResponse.json();
+        console.log(exportData.message);
+
+        // استدعاء ملف الحذف بعد اكتمال عملية الحفظ
+        const deleteResponse = await fetch('delete_from_db.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'type=' + type,
+        });
+
+        if (!deleteResponse.ok) {
+          throw new Error('Error deleting data from database.');
+        }
+
+        const deleteData = await deleteResponse.json();
+        console.log(deleteData.message);
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     // جلب جميع الإشعارات
-    async function fetchNotifications() {
+    async function fetchNotifications(data_type = 'new') {
       try {
         const formData = new FormData();
-        const response = await fetch('get_all_notifications.php', {
+        formData.append('data_type', data_type);
+        const response = await fetch('get_notifications_from_db.php', {
           method: 'POST',
           body: formData
         });
@@ -89,20 +142,46 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
           throw new Error('فشل في جلب الإشعارات.');
         }
         const notifications = await response.json();
-        console.log(notifications)
         displayNotifications(notifications);
+        /*await exportData('comments');
+        await exportData('requests');
+        await exportData('volunteers');
+        await exportData('contacts');
+        await exportData('courses');*/
       } catch (error) {
         console.error(error);
         alert('حدث خطأ أثناء جلب الإشعارات.');
       }
     }
+    // جلب جميع الإشعارات القديمة
+    async function fetchOldNotifications() {
+      try {
+        const formData = new FormData();
+        const response = await fetch('get_notifications_from_json.php', {
+          method: 'POST',
+          body: formData
+        });
+        if (!response.ok) {
+          throw new Error('فشل في جلب الإشعارات القديمة.');
+        }
+        const oldNotifications = await response.json();
+        displayNotifications(oldNotifications, true);
 
+      } catch (error) {
+        console.error(error);
+        alert('حدث خطأ أثناء جلب الإشعارات القديمة.');
+
+      }
+
+    }
     // عرض الإشعارات
-    function displayNotifications(notifications) {
+    function displayNotifications(notifications, append = false) {
       const notificationsContainer = document.getElementById('notifications-container');
-      notificationsContainer.innerHTML = ''; // مسح أي محتوى سابق
+      if (!append) {
+        notificationsContainer.innerHTML = '';
+      }
       if (notifications.length == 0) {
-        notificationsContainer.innerHTML = '<p>لا توجد إشعارات</p>'
+        notificationsContainer.innerHTML += '<p>لا توجد إشعارات</p>';
       }
       notifications.forEach(notification => {
         const notificationItem = document.createElement('div');
@@ -158,6 +237,11 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         notificationsContainer.appendChild(notificationItem);
       });
     }
+
+    /*const loadOldButton = document.getElementById('load-old-notifications');
+    loadOldButton.addEventListener('click', async () => {
+      await fetchOldNotifications();
+    });*/
     // استدعاء دالة جلب الإشعارات عند تحميل الصفحة
     fetchNotifications();
   </script>
